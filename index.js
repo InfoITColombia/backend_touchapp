@@ -34,21 +34,32 @@ db.connect(function(err) {
 app.post("/register", (req, res)=>{
     const N_USUARIO = req.body.N_USUARIO;
     const PWD_USUARIO = req.body.PWD_USUARIO;
+    
+
 
     db.query(
         "INSERT INTO USUARIO (N_USUARIO,PWD_USUARIO) VALUES (?,?)",
         [N_USUARIO, PWD_USUARIO],
         (err,result)=>{
-            console.log(err);
+            if (err){
+                console.log(err);
+                res.send({message:err})
+            }else{
+                res.send({message:result})
+                console.log(result);
+            }
+
+            
         }
     )
 });
 
-app.post('/login', (req,res)=>{
+app.post('/login_old', (req,res)=>{
 
-    const username = req.body.username;
-    const password = req.body.password;
-    //console.log("REQUEST ES " & req)
+    const username = req.body.N_USUARIO;
+    const password = req.body.PWD_USUARIO;
+    console.log("REQUEST ES ")
+    console.log(req)
 
     db.query(
         "SELECT * FROM USUARIO WHERE N_USUARIO = ? and PWD_USUARIO = ?",
@@ -62,6 +73,37 @@ app.post('/login', (req,res)=>{
                     res.send(result)
                 }else{
                     res.send({message:"Wrong username/password!"})
+                }
+            }
+        }
+    )
+});
+
+app.post('/login', (req,res)=>{
+
+    const username = req.body.N_USUARIO;
+    const password = req.body.PWD_USUARIO;
+    
+
+    db.query(
+        "SELECT * FROM USUARIO WHERE N_USUARIO = ? ",
+        [username],
+        (err,result)=>{
+            if (err){
+                res.send({message:err})
+                //console.log(err)
+            }else{
+                if (result.length>0){
+                    console.log(result[0].PWD_USUARIO)
+                    if (result[0].PWD_USUARIO == password){
+                        res.send({message:result[0].N_USUARIO})
+                    }
+                    else{
+                        res.send({message:"Contraseña incorrecta"})
+                    }
+                    
+                }else{
+                    res.send({message:"El usuario no existe!"})
                 }
             }
         }
