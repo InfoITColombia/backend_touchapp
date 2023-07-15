@@ -96,7 +96,7 @@ app.post('/login', (req,res)=>{
                 if (result.length>0){
                     console.log(result[0].PWD_USUARIO)
                     if (result[0].PWD_USUARIO == password){
-                        res.send({message:result[0].N_USUARIO})
+                        res.send(result[0].N_USUARIO)
                     }
                     else{
                         res.send({message:"Contraseña incorrecta"})
