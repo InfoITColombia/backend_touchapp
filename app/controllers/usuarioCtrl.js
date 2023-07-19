@@ -15,8 +15,8 @@ async function autenticarUsuario(req, res, next) {
         res.json({ status:false, message: 'Credenciales inválidas' });
       }
     } else {
-     res.status(401).json({ status:false, message: 'El usuario no existe' });
-     //   res.json({status:false,message:'El usuario no existe'})
+     //res.status(401).json({ status:false, message: 'El usuario no existe' });
+        res.json({status:false,message:'El usuario no existe'})
     }
   } catch (error) {
     next(error);
