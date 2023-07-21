@@ -11,6 +11,19 @@ async function registrarProveedor(req, res, next){
     }
 }
 
+async function obtenerProveedor(req,res,next){
+    try{
+        const {K_PROVEEDOR} = req.body
+        const proveedor = await proveedorModel.obtenerProveedor(K_PROVEEDOR)
+        if (proveedor){
+            res.status(201).json({K_PROVEEDOR : proveedor.K_PROVEEDOR, N_PROVEEDOR : proveedor.N_PROVEEDOR})
+        }
+    }catch(error){
+            res.status(501).json({status:false, message:"No se encontró un proveedor con el código solicitado"})
+    }
+}
+
 module.exports = {
     registrarProveedor,
+    obtenerProveedor,
   };
