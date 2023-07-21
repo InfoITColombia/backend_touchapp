@@ -14,6 +14,7 @@ app.use(cors())
 // Conectar rutas con controladores
 
 app.use('/touchapp', require('./app/routes/usuarioRoute'));
+app.use('/touchapp', require('./app/routes/proveedorRoute'));
 
 const port = process.env.PORT || 3002;
 
