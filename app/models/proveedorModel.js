@@ -18,14 +18,25 @@ async function registrarProveedor(N_PROVEEDOR, DIR_PROVEEDOR, TEL_PROVEEDOR) {
   async function obtenerProveedor (K_PROVEEDOR){
     try {
       const [rows] = await db.promise().query('SELECT * FROM PROVEEDOR WHERE K_PROVEEDOR= ? ', [K_PROVEEDOR]);
+      console.log("Obtuve el proveedor ", rows)
       return rows[0] || null; 
     } catch (error) {
       console.error('Error OBTENIENDO proveedor:', error);
       throw new Error('Ocurrió un error obteniendo el proveedor.');
     }
   }
+
+  async function obtenerProveedores(){
+    try {
+      const [rows] = await db.promise().query("SELECT * FROM PROVEEDOR");
+      return rows || null;
+    } catch (error) {
+      
+    }
+  }
   
   module.exports = {
     registrarProveedor,
-    obtenerProveedor
+    obtenerProveedor, 
+    obtenerProveedores
   };
